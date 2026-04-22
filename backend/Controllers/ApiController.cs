@@ -7,5 +7,11 @@ namespace backend.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("API is working");
+        }
+
     }
 }
