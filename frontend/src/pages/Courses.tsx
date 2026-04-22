@@ -1,9 +1,38 @@
+import { useState, useEffect } from "react"; // Added hooks
 import { Link } from "react-router-dom";
-import { courses } from "../data/courses";
+import axios from "axios"; // Added axios
 import "./Courses.css";
 
+// Interface for type safety
+interface Course {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+  category: string;
+}
+
 export default function Courses() {
- return (
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        // Using your backend port 7080
+        const response = await axios.get("https://localhost:7080/api/courses");
+        setCourses(response.data);
+      } catch (error) {
+        console.error("Error fetching courses from TCIS API:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  return (
     <div className="training-page">
       {/* INTERNAL ANNOUNCEMENT HERO */}
       <section className="internal-hero">
@@ -20,7 +49,8 @@ export default function Courses() {
         </div>
         <div className="hero-stats">
           <div className="glass-card">
-            <strong>12+</strong>
+            {/* Dynamically show the count from the DB */}
+            <strong>{courses.length}+</strong>
             <span>Active Courses</span>
           </div>
           <div className="glass-card">
@@ -30,56 +60,47 @@ export default function Courses() {
         </div>
       </section>
 
-            {/* VALUE PROPOSITION STRIP */}
-            <div className="benefit-strip">
-            <div className="benefit-track">
-                {/* First Set */}
-                <div className="benefit-item">
-                <span className="icon">🚀</span>
-                <div>
-                    <strong>Career Growth</strong>
-                    <p>Aligned with internal promotion tracks</p>
-                </div>
-                </div>
-                <div className="benefit-item">
-                <span className="icon">🛠️</span>
-                <div>
-                    <strong>Modern Tech Stack</strong>
-                    <p>Focus on .NET, React, and SQL best practices</p>
-                </div>
-                </div>
-                <div className="benefit-item">
-                <span className="icon">🏆</span>
-                <div>
-                    <strong>Recognized Certification</strong>
-                    <p>Earn badges for your internal profile</p>
-                </div>
-                </div>
-
-                {/* Duplicate Set for Infinite Loop */}
-                <div className="benefit-item">
-                <span className="icon">🚀</span>
-                <div>
-                    <strong>Career Growth</strong>
-                    <p>Aligned with internal promotion tracks</p>
-                </div>
-                </div>
-                <div className="benefit-item">
-                <span className="icon">🛠️</span>
-                <div>
-                    <strong>Modern Tech Stack</strong>
-                    <p>Focus on .NET, React, and SQL best practices</p>
-                </div>
-                </div>
-                <div className="benefit-item">
-                <span className="icon">🏆</span>
-                <div>
-                    <strong>Recognized Certification</strong>
-                    <p>Earn badges for your internal profile</p>
-                </div>
-                </div>
+      {/* VALUE PROPOSITION STRIP */}
+      <div className="benefit-strip">
+        <div className="benefit-track">
+          <div className="benefit-item">
+            <span className="icon">🚀</span>
+            <div>
+              <strong>Career Growth</strong>
+              <p>Aligned with internal promotion tracks</p>
             </div>
+          </div>
+          <div className="benefit-item">
+            <span className="icon">🛠️</span>
+            <div>
+              <strong>Modern Tech Stack</strong>
+              <p>Focus on .NET, React, and SQL best practices</p>
             </div>
+          </div>
+          <div className="benefit-item">
+            <span className="icon">🏆</span>
+            <div>
+              <strong>Recognized Certification</strong>
+              <p>Earn badges for your internal profile</p>
+            </div>
+          </div>
+          {/* Duplicates for infinite loop animation */}
+          <div className="benefit-item">
+            <span className="icon">🚀</span>
+            <div>
+              <strong>Career Growth</strong>
+              <p>Aligned with internal promotion tracks</p>
+            </div>
+          </div>
+          <div className="benefit-item">
+            <span className="icon">🛠️</span>
+            <div>
+              <strong>Modern Tech Stack</strong>
+              <p>Focus on .NET, React, and SQL best practices</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* COURSE DIRECTORY */}
       <section className="catalog-section">
@@ -93,30 +114,33 @@ export default function Courses() {
           </div>
         </div>
 
-        <div className="training-grid">
+        {loading ? (
+          <div className="loading-container">Loading courses...</div>
+        ) : (
+          <div className="training-grid">
             {courses.map((course) => (
-                <Link to={`/course/${course.id}`} key={course.id} className="training-card">
+              <Link to={`/course/${course.id}`} key={course.id} className="training-card">
                 <div className="card-banner">
-                    {/* Render the image here */}
-                    <img 
-                    src={course.image} 
+                  <img 
+                    src={course.image || "https://via.placeholder.com/300x150"} 
                     alt={course.title} 
                     className="card-image" 
-                    />
-                    <span className="level-tag">Advanced</span>
+                  />
+                  <span className="level-tag">{course.category || "General"}</span>
                 </div>
                 
                 <div className="card-body">
-                    <h3 className="card-title">{course.title}</h3>
-                    <p className="card-desc">{course.description}</p>
-                    <div className="card-footer">
-                    <span className="duration">4 Hours</span>
+                  <h3 className="card-title">{course.title}</h3>
+                  <p className="card-desc">{course.description}</p>
+                  <div className="card-footer">
+                    <span className="duration">Self-Paced</span>
                     <span className="enroll-link">View Now →</span>
-                    </div>
+                  </div>
                 </div>
-                </Link>
+              </Link>
             ))}
-            </div>
+          </div>
+        )}
       </section>
     </div>
   );

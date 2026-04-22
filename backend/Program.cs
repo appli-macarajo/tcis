@@ -1,3 +1,6 @@
+using backend.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Add CORS Policy (Crucial for your React frontend in VS Code)
@@ -14,7 +17,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Replace the old DB Context registration with this:
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 var app = builder.Build();
+
+
 
 // 3. Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
