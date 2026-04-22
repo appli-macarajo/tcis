@@ -1,0 +1,19 @@
+# --- Node / React ---
+node_modules/
+dist/
+build/
+.eslintcache
+
+# --- ASP.NET Core ---
+bin/
+obj/
+publish/
+*.configs
+.vs/
+user.secrets.*
+
+# --- General ---
+.env
+.env.local
+.vscode/
+.DS_Store

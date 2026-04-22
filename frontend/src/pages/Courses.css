@@ -1,0 +1,258 @@
+:root {
+  --brother-blue: #002e6d; /* Professional Corporate Blue */
+  --accent-blue: #0056d2;
+  --text-dark: #1a1a1b;
+  --text-light: #5f6368;
+  --bg-soft: #f8f9fc;
+}
+
+.training-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: white;
+  color: var(--text-dark);
+}
+
+/* HERO SECTION */
+.internal-hero {
+  background: linear-gradient(135deg, #002e6d 0%, #0056d2 100%);
+  color: white;
+  padding: 80px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dept-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.hero-content h1 {
+  font-size: 42px;
+  margin: 20px 0;
+  font-weight: 700;
+}
+
+.hero-content p {
+  max-width: 600px;
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.primary-cta {
+  background: white;
+  color: var(--brother-blue);
+  border: none;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary-cta {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hero-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  min-width: 160px;
+}
+
+/* BENEFIT STRIP */
+.benefit-strip {
+  overflow: hidden; /* Hide the items outside the container */
+  background: var(--bg-soft);
+  padding: 30px 0;
+  border-bottom: 1px solid #eef0f5;
+  white-space: nowrap;
+  position: relative;
+}
+
+/* Create a subtle fade effect on the edges */
+.benefit-strip::before,
+.benefit-strip::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+}
+.benefit-strip::before { left: 0; background: linear-gradient(to right, var(--bg-soft), transparent); }
+.benefit-strip::after { right: 0; background: linear-gradient(to left, var(--bg-soft), transparent); }
+
+.benefit-track {
+  display: flex;
+  width: max-content; /* Ensure the track is as wide as all items combined */
+  animation: scroll-slow 30s linear infinite; /* Adjust '30s' to make it faster or slower */
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 60px; /* Space between the items */
+  flex-shrink: 0;
+}
+
+.benefit-item .icon {
+  font-size: 24px;
+}
+
+.benefit-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* THE ANIMATION */
+@keyframes scroll-slow {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Moves the track by half its width (one full set of items) */
+    transform: translateX(-50%);
+  }
+}
+
+/* Optional: Pause on hover so users can read */
+.benefit-strip:hover .benefit-track {
+  animation-play-state: paused;
+}
+
+/* CATALOG */
+.catalog-section {
+  padding: 60px 10%;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.filter-group {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  color:#0056d2;
+}
+
+.filter-btn.active {
+  background: var(--brother-blue);
+  color: white;
+  border-color: var(--brother-blue);
+}
+
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.training-card {
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.training-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.card-banner {
+  height: 160px; /* Adjusted height for better visibility */
+  position: relative;
+  overflow: hidden;
+}
+
+.training-card:hover .card-image {
+  transform: scale(1.05); /* Slight zoom on hover for a premium feel */
+}
+
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This makes the image cover the area without distortion */
+  transition: transform 0.3s ease;
+}
+
+.level-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2; /* Keeps tag above the image */
+  background: white;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.card-desc {
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-blue);
+}
